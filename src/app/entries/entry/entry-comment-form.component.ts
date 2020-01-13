@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output, ViewChild } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild
+} from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { EntryService } from "../shared/entry.service";
 /*
@@ -33,6 +39,7 @@ export class EntryCommentFormComponent {
   }>();
 
   @ViewChild("commentForm") commentForm: NgForm;
+  @Input() entryId: number;
 
   constructor(private entryService: EntryService) {}
 
@@ -40,10 +47,12 @@ export class EntryCommentFormComponent {
     //So when the comment is submitted, we are storing the name and the comment typed into a full comment variable
     let comment = { name: this.name, comment: this.comment };
 
-    //we emit, i.e. "send/broadcast", the comment
-    this.onCommentAdded.emit(comment);
+    this.entryService.addComment(this.entryId, comment).then(() => {
+      //we emit, i.e. "send/broadcast", the comment
+      this.onCommentAdded.emit(comment);
 
-    //and reset the commentform
-    this.commentForm.resetForm();
+      //and reset the commentform
+      this.commentForm.resetForm();
+    });
   }
 }
