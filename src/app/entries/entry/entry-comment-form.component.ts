@@ -44,6 +44,7 @@ export class EntryCommentFormComponent {
   constructor(private entryService: EntryService) {}
 
   onSubmit(commentForm: NgForm) {
+    if (this.commentForm.invalid) return;
     //So when the comment is submitted, we are storing the name and the comment typed into a full comment variable
     let comment = { name: this.name, comment: this.comment };
 
