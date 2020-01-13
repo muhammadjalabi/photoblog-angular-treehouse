@@ -1,21 +1,9 @@
 <form (submit)="onSubmit()" #commentForm="ngForm" novalidate>
   <div>
     <label for="name"> Name</label>
-    <input
-      type="text"
-      name="name"
-      [(ngModel)]="name"
-      required
-      minlength="3"
-      #nameField="ngModel"
-    />
-    <div
-      class="alert alert-danger"
-      *ngIf="
-        (commentForm.submitted || nameField.dirty || nameField.touched) &&
-        nameField.errors
-      "
-    >
+    <input type="text" name="name" [(ngModel)]="name" required minlength="3" #nameField="ngModel"
+      [ngStyle]="{'outline-color': nameField.dirty && nameField.valid ? 'green': undefined}" />
+    <div class="alert alert-danger" *ngIf="(commentForm.submitted || nameField.touched) && nameField.errors">
       <div [hidden]="!nameField.errors.required">Name is required</div>
       <div [hidden]="!nameField.errors.minlength">
         A name needs atleast 3 characters
@@ -24,20 +12,11 @@
   </div>
   <div>
     <label for="comment"> Comment</label>
-    <textarea
-      name="comment"
-      [(ngModel)]="comment"
-      required
-      minlength="3"
-      #commentField="ngModel"
-    ></textarea>
-    <div
-      class="alert alert-danger"
-      *ngIf="
-        (commentForm.submitted || commentField.dirty || commentField.touched) &&
-        commentField.errors
-      "
-    >
+    <textarea name="comment" [(ngModel)]="comment" required minlength="3" #commentField="ngModel"
+      [ngStyle]="{'outline-color': commentField.dirty && commentField.valid ? 'green': undefined}"></textarea>
+    <div class="alert alert-danger" *ngIf="
+        (commentForm.submitted || commentField.touched) && commentField.errors
+      ">
       <div [hidden]="!commentField.errors.required">
         Some text is required for a comment
       </div>
