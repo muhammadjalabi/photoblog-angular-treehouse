@@ -1,0 +1,36 @@
+<h2>{{ entry.title }}</h2>
+<figure>
+  <img src="{{ entry.photo }} " />
+  <figcaption>{{ entry.description }}</figcaption>
+</figure>
+<div class="actions">
+  <button
+    type="button"
+    (click)="isLiked = !isLiked"
+    [ngClass]="{ liked: isLiked }"
+  >
+    ❤
+  </button>
+  <button type="button" (click)="showComments = !showComments">
+    Comments
+    {{ entry.comments.length }}
+  </button>
+</div>
+
+<div class="comments" *ngIf="showComments">
+  <!--
+  the *ngFor-directive is looping over
+  the array so we can display all the comments and not one by one
+
+  !!can be seen as for loop/foreach/map!!
+-->
+  <div class="comment" *ngFor="let comment of entry.comments">
+    <p>
+      <strong>{{ comment.name }}</strong>
+      : {{ comment.comment }}
+    </p>
+  </div>
+  <app-entry-comment-form
+    (onCommentAdded)="onCommentAdded($event)"
+  ></app-entry-comment-form>
+</div>
